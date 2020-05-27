@@ -1,23 +1,46 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+
+const HomeView = () =>
+  import(/* webpackChunkName: "home-view" */ "../views/HomeView.vue");
+const PollListView = () =>
+  import(/* webpackChunkName: "poll-list-view" */ "../views/PollListView.vue");
+const PollDetailView = () =>
+  import(
+    /* webpackChunkName: "poll-detail-view" */ "../views/PollDetailView.vue"
+  );
+const PollNewView = () =>
+  import(/* webpackChunkName: "poll-new-view" */ "../views/PollNewView.vue");
+const PollEditView = () =>
+  import(/* webpackChunkName: "poll-edit-view" */ "../views/PollEditView.vue");
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home
+    name: "home-view",
+    component: HomeView
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    path: "/polls",
+    name: "poll-list-view",
+    component: PollListView
+  },
+  {
+    path: "/create",
+    name: "poll-new-view",
+    component: PollNewView
+  },
+  {
+    path: "/polls/:uid",
+    name: "poll-detail-view",
+    component: PollDetailView
+  },
+  {
+    path: "/polls/:uid/edit",
+    name: "poll-edit-view",
+    component: PollEditView
   }
 ];
 
