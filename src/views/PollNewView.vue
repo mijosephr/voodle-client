@@ -1,9 +1,9 @@
 <template>
   <div>
     <h1>PollNewView</h1>
-    <h2 v-text="poll.title" />
-    <PollForm :poll="poll" />
-    <pre>{{ poll }}</pre>
+    <h2>New Poll</h2>
+    <PollForm />
+    <router-link to="/polls">Back to Poll List</router-link>
   </div>
 </template>
 
@@ -11,13 +11,6 @@
 import PollForm from "@/components/PollForm";
 
 export default {
-  components: { PollForm },
-  data() {
-    return {
-      poll: {
-        title: ""
-      }
-    };
-  }
+  components: { PollForm }
 };
 </script>
