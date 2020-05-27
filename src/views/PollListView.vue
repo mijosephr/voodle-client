@@ -22,7 +22,11 @@ export default {
     }
   },
   mounted() {
-    Poll.api().get("/api/polls", { dataKey: false });
+    Poll.api().get("/api/polls", {
+      dataKey: false,
+      persistBy: "create",
+      persistOptions: { create: ["options"] }
+    });
   }
 };
 </script>
