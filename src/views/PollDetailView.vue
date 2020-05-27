@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="poll">
     <h1>PollDetailView</h1>
     <h2 v-text="poll.title" />
     <pre>{{ poll }}</pre>
@@ -17,6 +17,9 @@ export default {
         .where("uid", this.$route.params.uid)
         .first();
     }
+  },
+  mounted() {
+    Poll.api().get(`/api/polls/${this.$route.params.uid}`, { dataKey: false });
   }
 };
 </script>

@@ -20,6 +20,9 @@ export default {
     polls() {
       return Poll.all();
     }
+  },
+  mounted() {
+    Poll.api().get("/api/polls", { dataKey: false });
   }
 };
 </script>

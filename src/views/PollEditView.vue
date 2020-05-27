@@ -20,6 +20,9 @@ export default {
         .where("uid", this.$route.params.uid)
         .first();
     }
+  },
+  mounted() {
+    Poll.api().get(`/api/polls/${this.$route.params.uid}`, { dataKey: false });
   }
 };
 </script>

@@ -25,15 +25,13 @@ export default {
     onSubmit() {
       const { title } = this.form;
       if (this.poll) {
-        Poll.update({
-          where: this.poll.id,
-          data: { title }
-        });
+        Poll.api().put(
+          `/api/polls/${this.poll.uid}`,
+          { title },
+          { dataKey: false }
+        );
       } else {
-        const uid = Math.random()
-          .toString(36)
-          .slice(2);
-        Poll.insert({ data: { uid, title } });
+        Poll.api().post("/api/polls", { title }, { dataKey: false });
       }
     },
     reset() {
