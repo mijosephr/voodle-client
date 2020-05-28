@@ -1,11 +1,21 @@
 <template>
-  <div v-if="poll">
-    <h1>PollDetailView</h1>
-    <h2 v-text="poll.title" />
-    <PollForm :poll="poll" />
-    <pre>{{ poll }}</pre>
-    <router-link to="/polls">Back to Poll List</router-link>
-  </div>
+  <v-app>
+    <v-app-bar app flat>
+      <v-btn icon exact :to="`/polls/${$route.params.uid}`">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+      <v-toolbar-title>Edit Poll</v-toolbar-title>
+      <v-spacer />
+      <v-btn text>Save</v-btn>
+    </v-app-bar>
+    <v-content>
+      <v-container>
+        <div v-if="poll">
+          <PollForm :poll="poll" />
+        </div>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>

@@ -1,17 +1,43 @@
 <template>
-  <div v-if="poll">
-    <h1>PollDetailView</h1>
-    <h2 v-text="poll.title" />
-    <ul>
-      <li
-        v-for="option in poll.options"
-        :key="option.id"
-        v-text="option.text"
-      />
-    </ul>
-    <pre>{{ poll }}</pre>
-    <router-link to="/polls">Back to Poll List</router-link>
-  </div>
+  <v-app>
+    <v-app-bar app flat>
+      <v-btn icon to="/polls" exact>
+        <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
+      <v-spacer />
+      <v-menu>
+        <template v-slot:activator="{ on: menu }">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on: tooltip }">
+              <v-btn icon v-on="{ ...tooltip, ...menu }">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+            <span>Im A ToolTip</span>
+          </v-tooltip>
+        </template>
+        <v-list>
+          <v-list-item :to="`/polls/${$route.params.uid}/edit`">
+            <v-list-item-title>Edit</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-app-bar>
+    <v-content>
+      <v-container>
+        <div v-if="poll">
+          <h1 v-text="poll.title" />
+          <ul>
+            <li
+              v-for="option in poll.options"
+              :key="option.id"
+              v-text="option.text"
+            />
+          </ul>
+        </div>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>

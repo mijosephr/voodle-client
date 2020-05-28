@@ -1,15 +1,13 @@
 <template>
-  <form @submit.prevent="onSubmit">
-    <input type="text" v-model="form.title" />
+  <v-form @submit.prevent="onSubmit">
+    <v-text-field label="Title" />
     <div v-for="(option, index) in form.options" :key="index">
-      <input type="text" v-model="option.text" />
-      <a href="#" @click="remove(index)">Remove</a>
+      <v-text-field type="text" v-model="option.text" />
     </div>
-    <hr />
-    <a href="#" @click="add">Add</a>
-    <input type="submit" value="Save" />
-    <a href="#" @click="reset">Reset</a>
-  </form>
+    <a href="#" @click="add">Add option</a>
+    <v-btn type="submit">Save</v-btn>
+    <v-btn text @click="reset">Reset</v-btn>
+  </v-form>
 </template>
 
 <script>

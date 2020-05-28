@@ -3,6 +3,10 @@ import VueRouter from "vue-router";
 
 const HomeView = () =>
   import(/* webpackChunkName: "home-view" */ "../views/HomeView.vue");
+const SignupView = () =>
+  import(/* webpackChunkName: "signup-view" */ "../views/SignupView.vue");
+const LoginView = () =>
+  import(/* webpackChunkName: "login-view" */ "../views/LoginView.vue");
 const PollListView = () =>
   import(/* webpackChunkName: "poll-list-view" */ "../views/PollListView.vue");
 const PollDetailView = () =>
@@ -21,6 +25,16 @@ const routes = [
     path: "/",
     name: "home-view",
     component: HomeView
+  },
+  {
+    path: "/signup",
+    name: "signup-view",
+    component: SignupView
+  },
+  {
+    path: "/login",
+    name: "login-view",
+    component: LoginView
   },
   {
     path: "/polls",
