@@ -1,29 +1,27 @@
 <template>
-  <BaseForm :form="form" />
+  <BaseForm v-if="draftPoll" :poll="poll" :draftPoll="draftPoll" />
 </template>
 
 <script>
 import BaseForm from "@/components/PollForm/BaseForm";
+import { Poll, DraftPoll } from "@/store/models";
 
 export default {
   components: { BaseForm },
-  data() {
-    return {
-      form: {
-        title: "ABC",
-        options: [
-          { text: "Option #1" },
-          { text: "Option #2" },
-          { text: "Option #3" }
-        ],
-        settings: {
-          threeStateVote: true,
-          hiddenPoll: false,
-          oneVotePerParticipant: true,
-          maxVotesPerOption: 5
-        }
-      }
-    };
+  computed: {
+    uid() {
+      return this.$route.params.uid;
+    },
+    poll() {
+      return Poll.find(this.uid);
+    },
+    draftPoll() {
+      return DraftPoll.find(this.uid);
+    }
+  },
+  async mounted() {
+    await Poll.retrieve(this.uid);
+    await this.poll.createDraft();
   }
 };
 </script>

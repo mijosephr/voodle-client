@@ -1,7 +1,8 @@
 <template>
   <component
     :is="selectedForm"
-    :form="form"
+    :poll="poll"
+    :draftPoll="draftPoll"
     @change-selected-form="changeSelectedForm"
   />
 </template>
@@ -14,7 +15,14 @@ import SettingsForm from "@/components/PollForm/SettingsForm";
 export default {
   components: { PollForm, OptionsForm, SettingsForm },
   props: {
-    form: {
+    poll: {
+      type: Object,
+      default: () => ({
+        title: "",
+        options: []
+      })
+    },
+    draftPoll: {
       type: Object,
       default: () => ({
         title: "",

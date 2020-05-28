@@ -19,7 +19,10 @@
             </v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
-            <v-switch color="teal" v-model="form.settings.threeStateVote" />
+            <v-switch
+              color="teal"
+              v-model="draftPoll.settings.threeStateVote"
+            />
           </v-list-item-action>
         </v-list-item>
         <v-list-item>
@@ -34,7 +37,7 @@
             </v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
-            <v-switch color="teal" v-model="form.settings.hiddenPoll" />
+            <v-switch color="teal" v-model="draftPoll.settings.hiddenPoll" />
           </v-list-item-action>
         </v-list-item>
         <v-list-item>
@@ -50,7 +53,7 @@
           <v-list-item-action>
             <v-switch
               color="teal"
-              v-model="form.settings.oneVotePerParticipant"
+              v-model="draftPoll.settings.oneVotePerParticipant"
             />
           </v-list-item-action>
         </v-list-item>
@@ -77,7 +80,11 @@
 <script>
 export default {
   props: {
-    form: {
+    poll: {
+      type: Object,
+      default: () => ({ title: "" })
+    },
+    draftPoll: {
       type: Object,
       default: () => ({
         settings: {
@@ -92,7 +99,7 @@ export default {
   computed: {
     hasMaxVotesPerOption: {
       get: function() {
-        return this.form.settings.maxVotesPerOption > 0;
+        return this.draftPoll.settings.maxVotesPerOption > 0;
       },
       set: function(newValue) {
         console.log("setter...", newValue);

@@ -9,7 +9,7 @@
     <v-content>
       <v-container>
         <v-text-field
-          v-for="(option, index) in form.options"
+          v-for="(option, index) in draftPoll.options"
           :key="index"
           :value="option.text"
         />
@@ -21,7 +21,11 @@
 <script>
 export default {
   props: {
-    form: {
+    poll: {
+      type: Object,
+      default: () => ({ title: "" })
+    },
+    draftPoll: {
       type: Object,
       default: () => ({ options: [] })
     }
