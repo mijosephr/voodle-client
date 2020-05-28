@@ -10,8 +10,12 @@ export function createOrUpdateOptions(schema, poll, options) {
     const optionId = option.id || null;
     if (optionId) {
       const option = schema.options.find(optionId);
-      option.update({ text });
-    } else {
+      if (text === "") {
+        option.destroy();
+      } else {
+        option.update({ text });
+      }
+    } else if (text !== "") {
       schema.options.create({ poll, text });
     }
   });
