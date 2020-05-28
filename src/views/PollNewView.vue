@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import PollForm from "@/components/PollForm";
+import PollForm from "@/components/PollForm/PollForm";
 
 export default {
   components: { PollForm }
