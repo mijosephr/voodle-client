@@ -1,28 +1,28 @@
 <template>
-  <v-app>
-    <v-app-bar app flat>
-      <v-btn icon to="/polls">
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
-      <v-toolbar-title>New Poll</v-toolbar-title>
-      <v-spacer />
-      <v-btn text>Create</v-btn>
-    </v-app-bar>
-    <v-content>
-      <v-container>
-        <div>
-          <h1>New Poll</h1>
-          <PollForm />
-        </div>
-      </v-container>
-    </v-content>
-  </v-app>
+  <BaseForm v-if="draftPoll" :poll="poll" :draftPoll="draftPoll" />
 </template>
 
 <script>
-import PollForm from "@/components/PollForm/PollForm";
+import BaseForm from "@/components/PollForm/BaseForm";
+import { Poll, DraftPoll } from "@/store/models";
 
 export default {
-  components: { PollForm }
+  components: { BaseForm },
+  computed: {
+    poll() {
+      return Poll.query()
+        .where("uid", "0")
+        .first();
+    },
+    draftPoll() {
+      return DraftPoll.query()
+        .where("uid", "0")
+        .first();
+    }
+  },
+  async mounted() {
+    await Poll.insert({ data: { uid: "0", title: "" } });
+    await this.poll.createDraft();
+  }
 };
 </script>

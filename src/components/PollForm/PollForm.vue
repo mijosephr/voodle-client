@@ -48,20 +48,31 @@ export default {
       this.$emit("change-selected-form", formName);
     },
     async updateTitle(value) {
-      await DraftPoll.update({
+      const res = await DraftPoll.update({
         where: this.draftPoll.id,
         data: {
           title: value
         }
       });
+      console.log(res, value, this.draftPoll);
     },
     cancel() {
-      this.$router.push(`/polls/${this.uid}`);
+      if (this.uid) {
+        this.$router.push(`/polls/${this.uid}`);
+      } else {
+        this.$router.push("/polls");
+      }
     },
     async save() {
+      console.log(this.draftPoll);
       const { title } = this.draftPoll;
-      await Poll.change(this.uid, { title });
-      this.$router.push(`/polls/${this.uid}`);
+      if (this.uid) {
+        await Poll.change(this.uid, { title });
+        this.$router.push(`/polls/${this.uid}`);
+      } else {
+        const poll = await Poll.postNew({ title });
+        this.$router.push(`/polls/${poll.uid}`);
+      }
     }
   }
 };

@@ -39,6 +39,25 @@ export default class Poll extends Model {
     });
   }
 
+  static async postNew({ title }) {
+    const {
+      entities: {
+        polls: [poll]
+      }
+    } = await this.api().post(
+      `/api/polls`,
+      { title },
+      {
+        dataKey: false,
+        persistBy: "create",
+        persistOptions: {
+          create: ["options"]
+        }
+      }
+    );
+    return poll;
+  }
+
   static async change(uid, { title }) {
     await this.api().put(
       `/api/polls/${uid}`,
@@ -72,6 +91,7 @@ export default class Poll extends Model {
         }
       });
     });
+    return draft_poll;
   }
 }
 
