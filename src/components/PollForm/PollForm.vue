@@ -4,7 +4,7 @@
       <v-btn icon exact @click="cancel">
         <v-icon>mdi-close</v-icon>
       </v-btn>
-      <v-toolbar-title>Edit Poll</v-toolbar-title>
+      <v-toolbar-title v-text="title" />
       <v-spacer />
       <v-btn text @click="save">Save</v-btn>
     </v-app-bar>
@@ -41,6 +41,9 @@ export default {
   computed: {
     uid() {
       return this.$route.params.uid;
+    },
+    title() {
+      return this.uid ? "Edit Poll" : "New Poll";
     }
   },
   methods: {
