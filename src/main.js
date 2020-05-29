@@ -11,6 +11,23 @@ if (process.env.NODE_ENV === "development") {
   makeServer();
 }
 
+import { Server, Response } from "miragejs";
+
+if (window.Cypress) {
+  new Server({
+    environment: "test",
+    routes() {
+      let methods = ["get", "put", "patch", "post", "delete"];
+      methods.forEach(method => {
+        this[method]("/*", async (schema, request) => {
+          let [status, headers, body] = await window.handleFromCypress(request);
+          return new Response(status, headers, body);
+        });
+      });
+    }
+  });
+}
+
 new Vue({
   router,
   store,
