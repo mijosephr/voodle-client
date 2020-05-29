@@ -6,7 +6,9 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn text @click="save">Save</v-btn>
+      <v-btn text @click="save" data-testid="savePoll" id="savePoll"
+        >Save</v-btn
+      >
     </v-app-bar>
     <v-content>
       <v-container>
@@ -15,8 +17,12 @@
             label="Title"
             :value="draftPoll.title"
             @input="updateTitle"
+            data-testid="title"
           />
-          <v-text-field @focus="changeSelectedForm('OptionsForm')" />
+          <v-text-field
+            @focus="changeSelectedForm('OptionsForm')"
+            data-testid="options"
+          />
           <v-text-field @focus="changeSelectedForm('SettingsForm')" />
         </div>
       </v-container>

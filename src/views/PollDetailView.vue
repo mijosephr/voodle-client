@@ -26,12 +26,13 @@
     <v-content>
       <v-container>
         <div v-if="poll">
-          <h1 v-text="poll.title" />
+          <h1 v-text="poll.title" data-testid="title" />
           <ul>
             <li
               v-for="option in poll.options"
               :key="option.id"
               v-text="option.text"
+              data-testid="option"
             />
           </ul>
         </div>

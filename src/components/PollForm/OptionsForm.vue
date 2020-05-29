@@ -6,7 +6,7 @@
       </v-btn>
       <v-toolbar-title>Options</v-toolbar-title>
       <v-spacer />
-      <v-btn icon @click="save">
+      <v-btn icon @click="save" data-testid="saveOptions" id="saveOptions">
         <v-icon>mdi-check</v-icon>
       </v-btn>
     </v-app-bar>
@@ -17,8 +17,15 @@
           :key="index"
           :value="option.text"
           @input="updateOption($event, option.id)"
+          data-testid="text"
         />
-        <v-btn block x-large outlined class="mt-6" @click="addOption"
+        <v-btn
+          block
+          x-large
+          outlined
+          class="mt-6"
+          @click="addOption"
+          data-testid="add"
           >Add an option</v-btn
         >
       </v-container>
