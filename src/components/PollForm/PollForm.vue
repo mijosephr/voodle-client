@@ -31,11 +31,11 @@ export default {
   props: {
     poll: {
       type: Object,
-      default: () => ({ title: "" })
+      default: () => ({ title: "", options: [] })
     },
     draftPoll: {
       type: Object,
-      default: () => ({ title: "" })
+      default: () => ({ title: "", options: [] })
     }
   },
   computed: {
@@ -64,13 +64,36 @@ export default {
       }
     },
     async save() {
-      console.log(this.draftPoll);
       const { title } = this.draftPoll;
+
       if (this.uid) {
-        await Poll.change(this.uid, { title });
+        const pollOptions = this.poll.options.map(option => {
+          const { id } = option;
+          return { id };
+        });
+        const draftPollOptions = this.draftPoll.options.map(option => {
+          const { text } = option;
+          return { text };
+        });
+        const options = draftPollOptions.map((draftPollOption, index) => {
+          const { text } = draftPollOption;
+          if (pollOptions[index]) {
+            const { id } = pollOptions[index];
+            return { id, text };
+          } else {
+            return { text };
+          }
+        });
+        console.log("options", options);
+        await Poll.change(this.uid, { title, options });
         this.$router.push(`/polls/${this.uid}`);
       } else {
-        const poll = await Poll.postNew({ title });
+        const options = this.draftPoll.options.map(option => {
+          const { text } = option;
+          return { text };
+        });
+        console.log("options", options);
+        const poll = await Poll.postNew({ title, options });
         this.$router.push(`/polls/${poll.uid}`);
       }
     }

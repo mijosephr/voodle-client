@@ -39,14 +39,14 @@ export default class Poll extends Model {
     });
   }
 
-  static async postNew({ title }) {
+  static async postNew({ title, options }) {
     const {
       entities: {
         polls: [poll]
       }
     } = await this.api().post(
       `/api/polls`,
-      { title },
+      { title, options },
       {
         dataKey: false,
         persistBy: "create",
@@ -58,10 +58,10 @@ export default class Poll extends Model {
     return poll;
   }
 
-  static async change(uid, { title }) {
+  static async change(uid, { title, options }) {
     await this.api().put(
       `/api/polls/${uid}`,
-      { title },
+      { title, options },
       {
         dataKey: false,
         persistBy: "create",
@@ -104,5 +104,28 @@ export class DraftPoll extends Poll {
       ...super.fields(),
       options: this.hasMany(DraftOption, "poll_id")
     };
+  }
+
+  async recreateOptions() {
+    const poll = Poll.query()
+      .where("uid", this.uid)
+      .with("options")
+      .first();
+    const optionsData = poll.options.map(option => {
+      const { text } = option;
+      return { text, poll_id: this.id };
+    });
+    await DraftOption.delete(option => {
+      return option.poll_id === this.id;
+    });
+    await DraftOption.insert({
+      data: optionsData
+    });
+  }
+
+  async addOption() {
+    await DraftOption.insert({
+      data: { text: "", poll_id: this.id }
+    });
   }
 }
